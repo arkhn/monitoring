@@ -1,5 +1,12 @@
 # Monitoring
 
+## Launch services
+
+The services (Prometheus and Grafana) are launched with docker-compose:
+
+```
+docker-compose up prometheus grafana
+```
 
 ## How to use Grafana
 
