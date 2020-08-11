@@ -17,7 +17,6 @@ jobs:
       - name: Lint
         working-directory: python
         run: |
-          cd python
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           flake8 . --count --max-complexity=10 --max-line-length=100 --statistics
           black --check --line-length=100 --verbose .
@@ -41,7 +40,6 @@ jobs:
           TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
         working-directory: python
         run: |
-          cd python
           python setup.py sdist bdist_wheel
           ls -l dist/*.tar.gz
           twine upload dist/*.tar.gz
