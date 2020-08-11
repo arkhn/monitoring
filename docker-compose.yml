@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus:latest
+    volumes:
+      - ./prometheus.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - arkhn
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana:latest
+    ports:
+      - 3010:3000
+    volumes:
+      - ./grafana/config.ini:/etc/grafana/config.ini
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+    networks:
+      - arkhn
+
+networks:
+  arkhn:
+    name: arkhn_network
