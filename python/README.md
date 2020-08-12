@@ -21,7 +21,7 @@ def func_to_count():
 ```
 from arkhn_monitoring import create_logger
 
-logger = create_logger("service", fluentd_host="fluentd", fluentd_port=24224, level="DEBUG)
+logger = create_logger("service", fluentd_host="fluentd", fluentd_port=24224, level="DEBUG")
 
 logger.debug("log")
 ```
