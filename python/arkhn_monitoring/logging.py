@@ -13,15 +13,26 @@ class CustomFilter(logging.Filter):
         return True
 
 
-def create_fluent_logger(service_name, fluentd_host, fluentd_port, level=None, extra_fields=[]):
+def create_logger(service_name, fluentd_host, fluentd_port, level=None, extra_fields=[]):
     """
     Create a logger with a FluentHandler.
+    Args:
+        service_name (str): name of the service from which the logging is done
+        fluentd_host (str): host of fluentd service
+        fluentd_port (int): port of fluentd service
+        level (str): the logging level ("INFO", "DEBUG", ...)
+        extra_fields (list of str): a list of extra fields to log
+    Returns:
+        Logger: the object to use to log messages
     """
     custom_format = {
         "where": "%(module)s.%(funcName)s",
         "type": "%(levelname)s",
         "service": service_name,
     }
+
+    if not isinstance(extra_fields, list):
+        raise ValueError("create_fluent_logger: extra_fields should be a list.")
 
     for field in extra_fields:
         custom_format[field] = f"%({field})s"
