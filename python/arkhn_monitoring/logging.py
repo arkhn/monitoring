@@ -3,19 +3,28 @@ import logging
 
 
 class CustomFilter(logging.Filter):
+    def __init__(self, extra_fields):
+        self.extra_fields = extra_fields
+
     def filter(self, record):
-        if not hasattr(record, "resource_id"):
-            record.resource_id = None
+        for field in self.extra_fields:
+            if not hasattr(record, field):
+                setattr(record, field, None)
         return True
 
 
-def create_fluent_logger(service_name, fluentd_host, fluentd_port, level=None):
+def create_fluent_logger(service_name, fluentd_host, fluentd_port, level=None, extra_fields=[]):
+    """
+    Create a logger with a FluentHandler.
+    """
     custom_format = {
         "where": "%(module)s.%(funcName)s",
         "type": "%(levelname)s",
         "service": service_name,
-        "resource_id": "%(resource_id)s",
     }
+
+    for field in extra_fields:
+        custom_format[field] = f"%({field})s"
 
     logger = logging.getLogger(service_name)
     logger.propagate = False
@@ -24,7 +33,7 @@ def create_fluent_logger(service_name, fluentd_host, fluentd_port, level=None):
     formatter = handler.FluentRecordFormatter(custom_format)
     h.setFormatter(formatter)
     logger.addHandler(h)
-    logger.addFilter(CustomFilter())
+    logger.addFilter(CustomFilter(extra_fields))
     logger.setLevel(level or getattr(logging, level))
 
     return logger
