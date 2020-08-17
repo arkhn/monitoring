@@ -22,6 +22,37 @@ services:
     networks:
       - arkhn
 
+  fluentd:
+    image: arkhn/fluentd:latest
+    build: ./fluentd
+    container_name: fluentd
+    volumes:
+      - ./fluentd/fluent.conf:/fluentd/etc/fluent.conf
+    ports:
+      - "24224:24224"
+    networks:
+      - arkhn
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.7.0
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    networks:
+      - arkhn
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.7.0
+    container_name: kibana
+    depends_on:
+      - elasticsearch
+    ports:
+      - "5601:5601"
+    networks:
+      - arkhn
+
 networks:
   arkhn:
     name: arkhn_network
