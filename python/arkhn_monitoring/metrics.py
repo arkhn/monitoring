@@ -19,12 +19,14 @@ class Timer:
 
         @wraps(func)
         def timed(*args, **kwargs):
-            # Set the labels
             if self.labelnames is not None:
+                # Add the labels
                 labels = {k: kwargs[k] for k in self.labelnames}
-                self.histogram.labels(**labels)
+                hist = self.histogram.labels(**labels)
+            else:
+                hist = self.histogram
 
-            with self.histogram.time():
+            with hist.time():
                 return func(*args, **kwargs)
 
         return timed
@@ -46,12 +48,13 @@ class Counter:
 
         @wraps(func)
         def counted(*args, **kwargs):
-            # Set the labels
             if self.labelnames is not None:
+                # Add the labels
                 labels = {k: kwargs[k] for k in self.labelnames}
-                self.prom_counter.labels(**labels)
+                self.prom_counter.labels(**labels).inc()
+            else:
+                self.prom_counter.inc()
 
-            self.prom_counter.inc()
             return func(*args, **kwargs)
 
         return counted
