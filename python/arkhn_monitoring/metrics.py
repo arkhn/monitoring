@@ -10,14 +10,20 @@ class Timer:
     """
 
     def __init__(self, *args, **kwargs):
-        """
-        Takes the same arguments as prometheus_client.Histogram
-        """
+        """ Takes the same arguments as prometheus_client.Histogram """
         self.histogram = Histogram(*args, **kwargs)
+        self.labelnames = kwargs.get("labelnames", None)
 
     def __call__(self, func, *args, **kwargs):
+        """ The kwargs whose name are in self.labelnames are used to set the metric labels. """
+
         @wraps(func)
         def timed(*args, **kwargs):
+            # Set the labels
+            if self.labelnames is not None:
+                labels = {k: kwargs[k] for k in self.labelnames}
+                self.histogram.labels(**labels)
+
             with self.histogram.time():
                 return func(*args, **kwargs)
 
@@ -31,14 +37,20 @@ class Counter:
     """
 
     def __init__(self, *args, **kwargs):
-        """
-        Takes the same arguments as prometheus_client.Counter
-        """
+        """ Takes the same arguments as prometheus_client.Counter """
         self.prom_counter = PromCounter(*args, **kwargs)
+        self.labelnames = kwargs.get("labelnames", None)
 
     def __call__(self, func, *args, **kwargs):
+        """ The kwargs whose name are in self.labelnames are used to set the metric labels. """
+
         @wraps(func)
         def counted(*args, **kwargs):
+            # Set the labels
+            if self.labelnames is not None:
+                labels = {k: kwargs[k] for k in self.labelnames}
+                self.prom_counter.labels(**labels)
+
             self.prom_counter.inc()
             return func(*args, **kwargs)
 
