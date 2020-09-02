@@ -64,25 +64,25 @@
         {
           "expr": "rate(time_extractor_extract_sum[1m]) / rate(time_extractor_extract_count[1m])",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "total time extract",
           "refId": "A"
         },
         {
           "expr": "rate(time_extractor_build_query_sum[1m]) / rate(time_extractor_build_query_count[1m])",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "build query",
           "refId": "C"
         },
         {
           "expr": "rate(time_extractor_run_query_sum[1m]) / rate(time_extractor_run_query_count[1m])",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "run query",
           "refId": "F"
         },
         {
           "expr": "rate(time_extractor_split_sum[1m]) / rate(time_extractor_split_count[1m])",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "split dataframe",
           "refId": "B"
         }
       ],
@@ -172,15 +172,15 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(time_transformer_transform_sum[1m]) / rate(time_transformer_transform_count[1m])",
+          "expr": "rate(time_transformer_transform_data_sum[1m]) / rate(time_transformer_transform_data_count[1m])",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "transform dataframe",
           "refId": "C"
         },
         {
           "expr": "rate(time_create_fhir_document_sum[1m]) / rate(time_create_fhir_document_count[1m])",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "build fhir document",
           "refId": "D"
         }
       ],
@@ -242,7 +242,7 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 6,
+        "x": 0,
         "y": 8
       },
       "hiddenSeries": false,
@@ -272,8 +272,14 @@
         {
           "expr": "rate(time_load_sum[1m]) / rate(time_load_count[1m])",
           "interval": "",
-          "legendFormat": "",
+          "legendFormat": "load to mongo",
           "refId": "B"
+        },
+        {
+          "expr": "rate(time_override_sum[1m]) / rate(time_override_count[1m])",
+          "interval": "",
+          "legendFormat": "override previous document",
+          "refId": "A"
         }
       ],
       "thresholds": [],
@@ -318,290 +324,6 @@
       }
     },
     {
-      "cards": {
-        "cardPadding": null,
-        "cardRound": null
-      },
-      "color": {
-        "cardColor": "#b4ff00",
-        "colorScale": "sqrt",
-        "colorScheme": "interpolateOranges",
-        "exponent": 0.5,
-        "mode": "spectrum"
-      },
-      "dataFormat": "tsbuckets",
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 16
-      },
-      "heatmap": {},
-      "hideZeroBuckets": true,
-      "highlightCards": true,
-      "id": 8,
-      "interval": "5m",
-      "legend": {
-        "show": false
-      },
-      "pluginVersion": "7.1.1",
-      "reverseYBuckets": false,
-      "targets": [
-        {
-          "expr": "increase(time_extractor_extract_bucket[5m])",
-          "format": "heatmap",
-          "interval": "",
-          "legendFormat": "{{le}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Extract time",
-      "tooltip": {
-        "show": true,
-        "showHistogram": false
-      },
-      "type": "heatmap",
-      "xAxis": {
-        "show": true
-      },
-      "xBucketNumber": null,
-      "xBucketSize": null,
-      "yAxis": {
-        "decimals": null,
-        "format": "short",
-        "logBase": 1,
-        "max": null,
-        "min": null,
-        "show": true,
-        "splitFactor": null
-      },
-      "yBucketBound": "auto",
-      "yBucketNumber": null,
-      "yBucketSize": null
-    },
-    {
-      "cards": {
-        "cardPadding": null,
-        "cardRound": null
-      },
-      "color": {
-        "cardColor": "#b4ff00",
-        "colorScale": "sqrt",
-        "colorScheme": "interpolateOranges",
-        "exponent": 0.5,
-        "mode": "spectrum"
-      },
-      "dataFormat": "tsbuckets",
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 16
-      },
-      "heatmap": {},
-      "hideZeroBuckets": true,
-      "highlightCards": true,
-      "id": 11,
-      "interval": "5m",
-      "legend": {
-        "show": false
-      },
-      "pluginVersion": "7.1.1",
-      "reverseYBuckets": false,
-      "targets": [
-        {
-          "expr": "increase(time_load_bucket[5m])",
-          "format": "heatmap",
-          "interval": "",
-          "legendFormat": "{{le}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Load time",
-      "tooltip": {
-        "show": true,
-        "showHistogram": false
-      },
-      "type": "heatmap",
-      "xAxis": {
-        "show": true
-      },
-      "xBucketNumber": null,
-      "xBucketSize": null,
-      "yAxis": {
-        "decimals": null,
-        "format": "short",
-        "logBase": 1,
-        "max": null,
-        "min": null,
-        "show": true,
-        "splitFactor": null
-      },
-      "yBucketBound": "auto",
-      "yBucketNumber": null,
-      "yBucketSize": null
-    },
-    {
-      "cards": {
-        "cardPadding": null,
-        "cardRound": null
-      },
-      "color": {
-        "cardColor": "#b4ff00",
-        "colorScale": "sqrt",
-        "colorScheme": "interpolateOranges",
-        "exponent": 0.5,
-        "mode": "spectrum"
-      },
-      "dataFormat": "tsbuckets",
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 0,
-        "y": 24
-      },
-      "heatmap": {},
-      "hideZeroBuckets": true,
-      "highlightCards": true,
-      "id": 9,
-      "interval": "5m",
-      "legend": {
-        "show": false
-      },
-      "pluginVersion": "7.1.1",
-      "reverseYBuckets": false,
-      "targets": [
-        {
-          "expr": "increase(time_transformer_transform_bucket[5m])",
-          "format": "heatmap",
-          "interval": "",
-          "legendFormat": "{{le}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Transform time",
-      "tooltip": {
-        "show": true,
-        "showHistogram": false
-      },
-      "type": "heatmap",
-      "xAxis": {
-        "show": true
-      },
-      "xBucketNumber": null,
-      "xBucketSize": null,
-      "yAxis": {
-        "decimals": null,
-        "format": "short",
-        "logBase": 1,
-        "max": null,
-        "min": null,
-        "show": true,
-        "splitFactor": null
-      },
-      "yBucketBound": "auto",
-      "yBucketNumber": null,
-      "yBucketSize": null
-    },
-    {
-      "cards": {
-        "cardPadding": null,
-        "cardRound": null
-      },
-      "color": {
-        "cardColor": "#b4ff00",
-        "colorScale": "sqrt",
-        "colorScheme": "interpolateOranges",
-        "exponent": 0.5,
-        "mode": "spectrum"
-      },
-      "dataFormat": "tsbuckets",
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 24
-      },
-      "heatmap": {},
-      "hideZeroBuckets": true,
-      "highlightCards": true,
-      "id": 10,
-      "interval": "5m",
-      "legend": {
-        "show": false
-      },
-      "pluginVersion": "7.1.1",
-      "reverseYBuckets": false,
-      "targets": [
-        {
-          "expr": "increase(time_create_fhir_document_bucket[5m])",
-          "format": "heatmap",
-          "interval": "",
-          "legendFormat": "{{le}}",
-          "refId": "A"
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Create document time",
-      "tooltip": {
-        "show": true,
-        "showHistogram": false
-      },
-      "type": "heatmap",
-      "xAxis": {
-        "show": true
-      },
-      "xBucketNumber": null,
-      "xBucketSize": null,
-      "yAxis": {
-        "decimals": null,
-        "format": "short",
-        "logBase": 1,
-        "max": null,
-        "min": null,
-        "show": true,
-        "splitFactor": null
-      },
-      "yBucketBound": "auto",
-      "yBucketNumber": null,
-      "yBucketSize": null
-    },
-    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -632,8 +354,8 @@
       "gridPos": {
         "h": 8,
         "w": 12,
-        "x": 0,
-        "y": 32
+        "x": 12,
+        "y": 8
       },
       "hiddenSeries": false,
       "id": 6,
