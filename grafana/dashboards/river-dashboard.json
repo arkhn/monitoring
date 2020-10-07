@@ -750,8 +750,8 @@
     "list": []
   },
   "time": {
-    "from": "2020-10-06T17:02:40.741Z",
-    "to": "2020-10-06T18:42:16.826Z"
+    "from": "now-1h",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
