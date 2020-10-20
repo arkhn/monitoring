@@ -10,7 +10,7 @@ requirements = read("requirements.txt").split()
 
 setup(
     name="arkhn-monitoring",
-    version="0.0.4",
+    version="0.0.5",
     author="Arkhn",
     author_email="contact@arkhn.org",
     description="Helper functions used to monitor Arkhn's stack.",
