@@ -30,7 +30,7 @@ jobs:
     name: Build and publish python
     runs-on: ubuntu-18.04
     needs: lint
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
 
     steps:
       - uses: actions/checkout@v1
